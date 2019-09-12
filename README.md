@@ -1,2 +1,0 @@
-# BrainFuck
-intepreter brainfuck language

@@ -7,50 +7,6 @@ static int buffer_size = 30000;
 void execute_atom(int *current_ptr, char *buffer, char command);
 void repeat(char *str, char *buffer, int *ptr);
 
-char *delete_spaces(char *str)
-{
-  int i = 0;
-  int j = 0;
-  char *output;
-  while(str[i] != '\0')
-    {
-      i++;
-    }
-  output = malloc(i);
-  if(output != NULL)
-    {
-      i = 0;
-      j = 0;
-      while(str[i] != '\0')
-	{
-	  if(str[i] != ' ')
-	    {
-	      output[j] = str[i];
-	      j++;
-	    }
-	  i++;
-	}
-      output[j] = '\0';
-      return (output);
-    }
-  return NULL;
-}
-
-void repeat(char *str, char *buffer, int *ptr)
-{
-  int i = 0;
-  
-  while(buffer[*ptr] != 0)
-    {
-      i = 0;
-      while(str[i] != '\0')
-	{
-	  execute_atom(ptr, buffer, str[i]);
-	  i++;
-	}
-    }
-}
-
 void parse(char *str)
 {
   int i = 0;
@@ -112,6 +68,21 @@ void execute_atom(int *current_ptr, char *buffer, char command)
     }
 }
 
+void repeat(char *str, char *buffer, int *ptr)
+{
+  int i = 0;
+  
+  while(buffer[*ptr] != 0)
+    {
+      i = 0;
+      while(str[i] != '\0')
+	{
+	  execute_atom(ptr, buffer, str[i]);
+	  i++;
+	}
+    }
+}
+
 int symb_counter(FILE *fd)
 {
   int i;
@@ -139,7 +110,6 @@ int main(int argc, char **argv)
 	      fseek(d, 0, SEEK_SET);
 	      fread(pr, 1, size, d);
 	    }
-	  pr = delete_spaces(pr);
 	  parse(pr);
 	}
     }
